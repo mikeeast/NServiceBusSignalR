@@ -1,0 +1,102 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Home";
+}
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.signalR-0.5.3.js")
+    @Scripts.Render("~/signalr/hubs")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Enable logging
+            $.connection.hub.logging = true;
+
+            // Proxy created on the fly
+            var messageHub = $.connection.messageHub;
+            messageHub.timeEnabled = true;
+
+            // Declare a function on the chat hub so the server can invoke it
+            messageHub.notify = function (message) {
+                $('#hub #messages').append('<li>' + message + '</li>');
+            };
+
+            messageHub.notifyDistributed = function (message) {
+                $('#distributed #messages').append('<li>' + message + '</li>');
+            };
+
+            // Receive messages from outside the hub, this call comes from global.asa
+            messageHub.setCurrentTime = function (currentTime) {
+                $('#currentTime').text(currentTime);
+            };
+
+            $("#hub #send").click(function () {
+                // Call the chat method on the server
+                messageHub.send($('#hub #msg').val());
+                $('#hub #msg').val('');
+            });
+
+            $("#distributed #sendconsole").click(function () {
+                console.log('what');
+                // Call the chat method on the server
+                messageHub.sendDistributed($('#distributed #msg').val());
+                $('#distributed #msg').val('');
+            });
+
+            $("#distributed #sendloopback").click(function () {
+                console.log('what');
+                // Call the chat method on the server
+                messageHub.sendLoopback($('#distributed #msg').val());
+                $('#distributed #msg').val('');
+            });
+
+            // Start the connection
+            $.connection.hub.start();
+        });
+    </script>
+}
+
+<h2>Exploring Hubs in SignalR</h2>
+
+<fieldset>
+    <legend>
+        Using a hub
+    </legend>
+    <p>
+        This is using a Hub connection to broadcast messages to all connected clients.
+        <a href="@Url.Action("Index")" target="_blank">Open up another browser</a> to see that messages are received in both browsers simultaneously
+    </p>
+    <div>
+        <form id="hub">
+            <input type="text" id="msg" />
+            <input type="button" id="send" value="send" />
+            <ul id="messages">
+            </ul>    
+        </form>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>
+        Outside the hub
+    </legend>
+    <p>
+        This is sent from outside the hub, using the hub context (see global.asax.cs)
+    </p>
+    <div>
+        <span id="currentTime"></span>
+    </div>    
+</fieldset>
+<fieldset>
+    <legend>
+        Distributed
+    </legend>
+    <p>
+        This sends a messages over NServiceBus. One sends message to the console app which handles it and displays the message. The other one uses the bus, but sends the message to itself (the web site). It receives it back in a message handler where the hub context is retrieved and the client method is called.
+    </p>
+    <form id="distributed">
+        <input type="text" id="msg" />
+        <input type="button" id="sendconsole" value="send to console app" />
+        <input type="button" id="sendloopback" value="loopback" />
+        <ul id="messages">
+        </ul>       
+    </form>
+</fieldset>
