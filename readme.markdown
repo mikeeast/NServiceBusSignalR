@@ -29,13 +29,13 @@ Added packages:
 ## Installation
 
 You should be able to just fork the project and rum the solution. But here are some things off the top of my head:
-* If you haven't run NServiceBus on the machine before, go to [NServiceBus.com](http://nservicebus.com/Downloads.aspx) and download it and then run the 'runmefirst.bat' from the package. It will setup Message Queueing and the DTC and some other magical things. Don't forget to unblock the file before unxipping it.
+* If you haven't run NServiceBus on the machine before, go to [NServiceBus.com](http://nservicebus.com/Downloads.aspx) and download it and then run the 'runmefirst.bat' from the package. It will setup Message Queueing and the DTC and some other magical things. Don't forget to unblock the file before unzipping it.
 * The message queues are supposed to be created automatically, but NServiceBus might have a bad day (in terms of permissions) and fail to install them. The queues you need are (oh, and they are transactional):
 * NServiceBusSignalR.Web
-- NServiceBusSignalR.Web.Retries
-- NServiceBusSignalR.ConsoleApp
-- NServiceBusSignalR.ConsoleApp.Retries
-- NServiceBusSignalR.Error
+    - NServiceBusSignalR.Web.Retries
+    - NServiceBusSignalR.ConsoleApp
+    - NServiceBusSignalR.ConsoleApp.Retries
+    - NServiceBusSignalR.Error
 * You should run SignalR on an IIS or an IIS Express or a late version. Like 7.5. 
 	
 ## Coming up
