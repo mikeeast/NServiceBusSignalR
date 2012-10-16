@@ -1,7 +1,7 @@
 NServiceBus and SignalR
 ======================================================================
 ## Background
-Having the distributed possibilities with NServiceBus in an event driven architecture and not taking it further to the client in a web application is not really doing it all the way. We know that we can rely on NServiceBus and SignalR is maturing every day. I felt it was time to sort things out regarding NServiceBus and SignalR and how they interact. And to provide an example as well.
+Having the distributed possibilities with NServiceBus in an event driven architecture and not taking it all the way to the client in a web application is just not good enough. We know that we can rely on NServiceBus for the messaging between servers and processes. SignalR is really an amazing candidate of enabling that next step. It is a bit rough but it is maturing every day and has an active community. I felt it was time to sort things out regarding NServiceBus and SignalR and how they interact. And to provide an example as well. I needed to do this for myself, but I hope that other people can find this useful as well.
 
 ## Points of interest
 This is a really simple sample and no detail has gone into any of the parts. The purpose to provide easy understanding of configuration of the two frameworks and the interactions between them.
@@ -28,10 +28,10 @@ Added packages:
 	
 ## Installation
 
-You should be able to just fork the project and rum the solution. But here are some things off the top of my head:
+You should be able to just fork the project and run the solution. But here are some things off the top of my head:
 * If you haven't run NServiceBus on the machine before, go to [NServiceBus.com](http://nservicebus.com/Downloads.aspx) and download it and then run the 'runmefirst.bat' from the package. It will setup Message Queueing and the DTC and some other magical things. Don't forget to unblock the file before unzipping it.
 * The message queues are supposed to be created automatically, but NServiceBus might have a bad day (in terms of permissions) and fail to install them. The queues you need are (oh, and they are transactional):
-* NServiceBusSignalR.Web
+    - NServiceBusSignalR.Web
     - NServiceBusSignalR.Web.Retries
     - NServiceBusSignalR.ConsoleApp
     - NServiceBusSignalR.ConsoleApp.Retries
