@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Owin.Host.SystemWeb</id>
+    <version>1.0.0-rc2-130118</version>
+    <title>Microsoft ASP.NET Host for OWIN Web Applications (nightly 2013 Jan 18)</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://aspnetwebstack.codeplex.com/license</licenseUrl>
+    <projectUrl>http://www.asp.net/katana</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/Microsoft.Owin.Host.SystemWeb.1.0.0-rc2-130118.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>This package enables any OWIN-based Web application framework to run on top of the Microsoft ASP.NET pipeline.</description>
+    <summary>This package enables any OWIN-based Web application framework to run on top of the Microsoft ASP.NET pipeline.</summary>
+    <tags>microsoft owin aspnet katana</tags>
+    <dependencies>
+      <dependency id="Owin" version="1.0" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+    </dependencies>
+    <references>
+      <reference file="Microsoft.Owin.Host.SystemWeb.dll" />
+    </references>
+  </metadata>
+</package>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNet.SignalR.Core</id>
+    <version>1.0.0-rc2-130116</version>
+    <title>Microsoft ASP.NET SignalR Core (nightly 2013 Jan 16)</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://aspnetwebstack.codeplex.com/license</licenseUrl>
+    <projectUrl>http://www.asp.net/signalR</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/Microsoft.AspNet.SignalR.Core.1.0.0-rc2-130116.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Async signaling library for .NET to help build real-time, multi-user interactive web applications.</description>
+    <summary>Async signaling library for .NET to help build real-time, multi-user interactive web applications.</summary>
+    <tags>Microsoft AspNet SignalR AspNetSignalR Core</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="4.5.11" />
+    </dependencies>
+    <references>
+      <reference file="Microsoft.AspNet.SignalR.Core.dll" />
+    </references>
+  </metadata>
+</package>

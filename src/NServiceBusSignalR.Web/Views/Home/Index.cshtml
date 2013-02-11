@@ -4,7 +4,7 @@
 }
 @section scripts
 {
-    @Scripts.Render("~/Scripts/jquery.signalR-0.5.3.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-1.0.0-rc2-130116.js")
     @Scripts.Render("~/signalr/hubs")
     <script type="text/javascript">
         $(document).ready(function () {
@@ -13,39 +13,39 @@
 
             // Proxy created on the fly
             var messageHub = $.connection.messageHub;
-            messageHub.timeEnabled = true;
+            messageHub.client.timeEnabled = true;
 
             // Declare a function on the chat hub so the server can invoke it
-            messageHub.notify = function (message) {
+            messageHub.client.notify = function (message) {
                 $('#hub #messages').append('<li>' + message + '</li>');
             };
 
-            messageHub.notifyDistributed = function (message) {
+            messageHub.client.notifyDistributed = function (message) {
                 $('#distributed #messages').append('<li>' + message + '</li>');
             };
 
             // Receive messages from outside the hub, this call comes from global.asa
-            messageHub.setCurrentTime = function (currentTime) {
+            messageHub.client.setCurrentTime = function (currentTime) {
                 $('#currentTime').text(currentTime);
             };
 
             $("#hub #send").click(function () {
                 // Call the chat method on the server
-                messageHub.send($('#hub #msg').val());
+                messageHub.server.send($('#hub #msg').val());
                 $('#hub #msg').val('');
             });
 
             $("#distributed #sendconsole").click(function () {
                 console.log('what');
                 // Call the chat method on the server
-                messageHub.sendDistributed($('#distributed #msg').val());
+                messageHub.server.sendDistributed($('#distributed #msg').val());
                 $('#distributed #msg').val('');
             });
 
             $("#distributed #sendloopback").click(function () {
                 console.log('what');
                 // Call the chat method on the server
-                messageHub.sendLoopback($('#distributed #msg').val());
+                messageHub.server.sendLoopback($('#distributed #msg').val());
                 $('#distributed #msg').val('');
             });
 
@@ -66,7 +66,7 @@
         <a href="@Url.Action("Index")" target="_blank">Open up another browser</a> to see that messages are received in both browsers simultaneously
     </p>
     <div>
-        <form id="hub">
+        <form id="hub" onsubmit="event.preventDefault(); $(this).find('#send').click();">
             <input type="text" id="msg" />
             <input type="button" id="send" value="send" />
             <ul id="messages">
@@ -92,7 +92,7 @@
     <p>
         This sends a messages over NServiceBus. One sends message to the console app which handles it and displays the message. The other one uses the bus, but sends the message to itself (the web site). It receives it back in a message handler where the hub context is retrieved and the client method is called.
     </p>
-    <form id="distributed">
+    <form id="distributed" onsubmit="event.preventDefault(); $(this).find('#sendconsole').click();">
         <input type="text" id="msg" />
         <input type="button" id="sendconsole" value="send to console app" />
         <input type="button" id="sendloopback" value="loopback" />

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Microsoft.AspNet.SignalR;
 using NServiceBus;
 using NServiceBusSignalR.Messages;
 using NServiceBusSignalR.Web.Hubs;
-using SignalR;
 
 namespace NServiceBusSignalR.Web.MessageHandlers
 {
@@ -19,7 +15,6 @@ namespace NServiceBusSignalR.Web.MessageHandlers
             NotifyClients(message.Content);
         }
 
-
         public void Handle(LoopbackMessage message)
         {
             NotifyClients(message.Content);
@@ -28,7 +23,7 @@ namespace NServiceBusSignalR.Web.MessageHandlers
         static void NotifyClients(string content)
         {
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            messageHub.Clients.notifyDistributed(content);
+            messageHub.Clients.All.notifyDistributed(content);
         }
     }
 }

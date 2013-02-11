@@ -1,28 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using NServiceBus;
 using NServiceBusSignalR.Messages;
-using SignalR.Hubs;
 
 namespace NServiceBusSignalR.Web.Hubs
 {
     [HubName("messageHub")]
     public class MessageHub : Hub
     {
+        readonly IBus bus;
+
+        public MessageHub(IBus bus)
+        {
+            this.bus = bus;
+        }
+        
         public void Send(string message)
         {
-            Clients.notify(message);
+            Clients.All.notify(message);
         }
 
         public void SendLoopback(string message)
         {
-            MvcApplication.Bus.Send(new LoopbackMessage { Content = message });
+            bus.Send(new LoopbackMessage { Content = message });
         }
 
         public void SendDistributed(string message)
         {
-            MvcApplication.Bus.Send(new DistributedMessage { Content = message });
+            bus.Send(new DistributedMessage { Content = message });
         }
     }
 }

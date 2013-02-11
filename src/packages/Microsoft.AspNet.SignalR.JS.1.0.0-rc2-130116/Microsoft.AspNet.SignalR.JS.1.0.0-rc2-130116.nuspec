@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNet.SignalR.JS</id>
+    <version>1.0.0-rc2-130116</version>
+    <title>Microsoft ASP.NET SignalR JS (nightly 2013 Jan 16)</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://aspnetwebstack.codeplex.com/license</licenseUrl>
+    <projectUrl>http://www.asp.net/signalR</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/Microsoft.AspNet.SignalR.JS.1.0.0-rc2-130116.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Javascript library for SignalR</description>
+    <summary>Javascript library for SignalR</summary>
+    <tags>Microsoft AspNet SignalR AspNetSignalR JS</tags>
+    <dependencies>
+      <dependency id="jQuery" version="1.6.4" />
+    </dependencies>
+    <references />
+  </metadata>
+</package>

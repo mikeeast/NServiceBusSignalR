@@ -1,12 +1,13 @@
 ﻿using System;
 using NServiceBus;
 using NServiceBusSignalR.Messages;
+using StructureMap;
 
 namespace NServiceBusSignalR.ConsoleApp
 {
     class Program
     {
-        protected static IBus Bus { get; set; }
+        static IBus Bus { get; set; }
 
         static void Main(string[] args)
         {
@@ -15,6 +16,8 @@ namespace NServiceBusSignalR.ConsoleApp
 
             RegisterBus();
 
+            ObjectFactory.Configure(c => c.ForSingletonOf<MessageHubProxy>().Use(new MessageHubProxy()));
+        
             System.Threading.Thread.Sleep(2000);
             
             while(true)
@@ -29,17 +32,14 @@ namespace NServiceBusSignalR.ConsoleApp
         {
             NServiceBus.SetLoggingLibrary.Log4Net(log4net.Config.XmlConfigurator.Configure);
             Bus = NServiceBus.Configure.With()
-                .DefaultBuilder()
+                .StructureMapBuilder()
+                .Log4Net()
                 .XmlSerializer()
-                .DisableTimeoutManager()
                 .MsmqTransport()
-                    .IsTransactional(false)
-                    .PurgeOnStartup(false)
                 .UnicastBus()
-                    .ImpersonateSender(false)
-                    .LoadMessageHandlers()
                 .CreateBus()
                 .Start();
+            
         }
     }
 }

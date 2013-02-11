@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.AspNet.SignalR;
 using NServiceBus;
 using NServiceBusSignalR.Web.Hubs;
-using SignalR;
+using NServiceBusSignalR.Web.StructureMapIntegration;
+using StructureMap;
+using IDependencyResolver = Microsoft.AspNet.SignalR.IDependencyResolver;
 
 namespace NServiceBusSignalR.Web
 {
@@ -21,9 +20,11 @@ namespace NServiceBusSignalR.Web
     {
         protected void Application_Start()
         {
-            RouteTable.Routes.MapHubs();
-
             AreaRegistration.RegisterAllAreas();
+
+            InitialiseStructureMap();
+
+            RouteTable.Routes.MapHubs();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -35,7 +36,7 @@ namespace NServiceBusSignalR.Web
                 while (true)
                 {
                     var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-                    messageHub.Clients.setCurrentTime(DateTime.Now.ToString("HH:mm:ss"));
+                    messageHub.Clients.All.setCurrentTime(DateTime.Now.ToString("HH:mm:ss"));
                     System.Threading.Thread.Sleep(1000);
                 }
             })
@@ -44,19 +45,23 @@ namespace NServiceBusSignalR.Web
             RegisterBus();
         }
 
+        private void InitialiseStructureMap()
+        {
+            ObjectFactory.Initialize(i => 
+                i.For<IDependencyResolver>().Singleton().Add<SignalRStructureMapResolver>()
+            );
+            
+            GlobalHost.DependencyResolver = ObjectFactory.Container.GetInstance<Microsoft.AspNet.SignalR.IDependencyResolver>();
+        }
+
         void RegisterBus()
         {
             Bus = NServiceBus.Configure.With()
+                .StructureMapBuilder()
                 .Log4Net()
-                .DefaultBuilder()
                 .XmlSerializer()
-                .DisableTimeoutManager()
                 .MsmqTransport()
-                    .IsTransactional(false)
-                    .PurgeOnStartup(false)
                 .UnicastBus()
-                    .ImpersonateSender(false)
-                    .LoadMessageHandlers()
                 .CreateBus()
                 .Start();
         }
