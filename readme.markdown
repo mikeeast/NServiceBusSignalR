@@ -16,9 +16,9 @@ This scenario is used when code outside of the Hub want to make use of the Hub c
 This scenario completes the circle. There are two ways to send messages. The first sends messages to the Console App where they are diplayed. The console app can also send messages to the client. It's like a chat. The second way is a loopback mechanism where the web sends a message to itself. This is in case you don't want to use the Console App at all.
 
 Added packages:
-	* NServiceBus 3.3.5
-	* SignalR 1.0.0-rc2-130116 ([from here](http://www.myget.org/gallery/aspnetwebstacknightly))
-	* jQuery 1.9.1
+* NServiceBus 3.3.5
+* SignalR 1.0.0-rc2-130116 ([from here](http://www.myget.org/gallery/aspnetwebstacknightly))
+* jQuery 1.9.1
 
 ### ConsoleApp
 This is a very simple Console Application. The purpose is just to show that it is possible to send messages from a separate (server) process  to the client (GUI even).
