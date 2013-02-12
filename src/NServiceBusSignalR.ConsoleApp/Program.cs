@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBusSignalR.Messages;
 using StructureMap;
@@ -7,6 +8,7 @@ namespace NServiceBusSignalR.ConsoleApp
 {
     class Program
     {
+        static MessageHubProxy messageHubProxy;
         static IBus Bus { get; set; }
 
         static void Main(string[] args)
@@ -16,10 +18,11 @@ namespace NServiceBusSignalR.ConsoleApp
 
             RegisterBus();
 
-            ObjectFactory.Configure(c => c.ForSingletonOf<MessageHubProxy>().Use(new MessageHubProxy()));
+            messageHubProxy = new MessageHubProxy();
+            ObjectFactory.Initialize(c => c.ForSingletonOf<MessageHubProxy>().Use(messageHubProxy));
         
-            System.Threading.Thread.Sleep(2000);
-            
+            System.Threading.Thread.Sleep(3000);
+
             while(true)
             {
                 Console.WriteLine("What would you like to send?");

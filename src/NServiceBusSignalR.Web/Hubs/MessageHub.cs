@@ -17,7 +17,7 @@ namespace NServiceBusSignalR.Web.Hubs
         
         public void Send(string message)
         {
-            Clients.All.notify(message);
+            Clients.AllExcept(Context.ConnectionId).notify(message);
         }
 
         public void SendLoopback(string message)

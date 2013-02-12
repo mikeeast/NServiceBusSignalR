@@ -16,11 +16,11 @@ namespace NServiceBusSignalR.ConsoleApp
             hubConnection.StateChanged += change =>
                                           Console.WriteLine(change.OldState + " => " + change.NewState);
 
-            messageHub.On<string>("send", s => Console.WriteLine("Some client used send -> {0}", s));
-
+            messageHub.On<string>("Send", s => Console.WriteLine("Some client used send -> {0}", s));
+            
             hubConnection.Start().Wait();
         }
-
+        
         public void Send(string message)
         {
             messageHub.Invoke("send", message).ContinueWith(task =>
